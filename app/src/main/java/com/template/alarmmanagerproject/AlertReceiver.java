@@ -21,7 +21,11 @@ public class AlertReceiver extends BroadcastReceiver {
         Notification.Builder nb = notificationHelper.getChannelNotification();
         notificationHelper.getManager().notify(1, nb.build());
 
+        String name = intent.getStringExtra("name");
+
         Intent myIntent = new Intent(context, AlarmActivity.class);
+        myIntent.putExtra("name", name);
+
         myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(myIntent);
     }

@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
     private void startAlarm(Calendar c) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
+        intent.putExtra("name", "Будильничег!");
 
         // Второй параметр - идентификатор, который должен быть уникальным для каждого PendingIntent
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
