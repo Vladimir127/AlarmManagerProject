@@ -5,11 +5,13 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -71,9 +73,11 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
         mTextView.setText(timeText);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void startAlarm(Calendar c) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
+        intent.setAction("alarm");
         intent.putExtra("name", "Будильничег!");
 
         // Второй параметр - идентификатор, который должен быть уникальным для каждого PendingIntent
@@ -85,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
             c.add(Calendar.DATE, 1);
         }
 
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
 
     private void cancelAlarm() {

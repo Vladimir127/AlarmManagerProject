@@ -17,16 +17,18 @@ public class AlertReceiver extends BroadcastReceiver {
      */
     @Override
     public void onReceive(Context context, Intent intent) {
-        NotificationHelper notificationHelper = new NotificationHelper(context);
-        Notification.Builder nb = notificationHelper.getChannelNotification();
-        notificationHelper.getManager().notify(1, nb.build());
+        if (intent.getAction().equals("alarm")) {
+            NotificationHelper notificationHelper = new NotificationHelper(context);
+            Notification.Builder nb = notificationHelper.getChannelNotification();
+            notificationHelper.getManager().notify(1, nb.build());
 
-        String name = intent.getStringExtra("name");
+            String name = intent.getStringExtra("name");
 
-        Intent myIntent = new Intent(context, AlarmActivity.class);
-        myIntent.putExtra("name", name);
+            Intent myIntent = new Intent(context, AlarmActivity.class);
+            myIntent.putExtra("name", name);
 
-        myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(myIntent);
+            myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(myIntent);
+        }
     }
 }
